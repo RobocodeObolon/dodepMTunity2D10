@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class player : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class player : MonoBehaviour
     private Rigidbody2D rb;
     private float moveInput;
     private bool isGrounded;
+
+    public int coinsCollected = 0; 
+    public Text coinText;
 
     void Start()
     {
@@ -34,5 +38,14 @@ public class player : MonoBehaviour
     void FixedUpdate()
     {
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Crystal"))
+        {
+            coinsCollected++;
+            coinText.text = coinsCollected.ToString;
+            Destroy(other.gameObject);
+        }
     }
 }
