@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class camera : MonoBehaviour
 {
-    public Transform player;        
-    public float smoothSpeed = 0.125f; 
-    public Vector3 offset = new Vector3(0f, 0f, -10f); 
+    public Transform target;                      // »грок
+    public float smoothSpeed = 5f;                // „ем больше Ч тем быстрее
+    public Vector3 offset = new Vector3(0, 0, -10); // Z = -10 об€зательно дл€ 2D
 
     void LateUpdate()
     {
-        if (player != null)
-        {
-            Vector3 targetPosition = player.position + offset;
+        if (target == null) return;
 
-            Vector3 smoothPosition = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
+        Vector3 desiredPosition = target.position + offset;
 
-            transform.position = smoothPosition;
-        }
+        // ѕлавное движение камеры
+        transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
     }
 }
