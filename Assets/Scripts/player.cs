@@ -44,7 +44,7 @@ public class player : MonoBehaviour
         if (other.gameObject.CompareTag("Crystal"))
         {
             coinsCollected++;
-            coinText.text = coinsCollected.ToString;
+            coinText.text = coinsCollected.ToString();
             Destroy(other.gameObject);
         }
     }
