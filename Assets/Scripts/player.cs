@@ -15,12 +15,19 @@ public class player : MonoBehaviour
     private float moveInput;
     private bool isGrounded;
 
-    public int coinsCollected = 0; 
+    public int coinsCollected = 0;
     public Text coinText;
+
+    public GameObject winPanel;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        if (winPanel != null)
+        {
+            winPanel.SetActive(false); 
+        }
     }
 
     void Update()
@@ -39,6 +46,7 @@ public class player : MonoBehaviour
     {
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Crystal"))
@@ -46,6 +54,12 @@ public class player : MonoBehaviour
             coinsCollected++;
             coinText.text = coinsCollected.ToString();
             Destroy(other.gameObject);
+
+            if (coinsCollected >= 4 && winPanel != null)
+            {
+                winPanel.SetActive(true);
+                Time.timeScale = 0f; 
+            }
         }
     }
 }
